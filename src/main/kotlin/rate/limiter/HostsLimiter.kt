@@ -3,7 +3,7 @@ package rate.limiter
 import kotlinx.coroutines.*
 import java.util.concurrent.atomic.AtomicInteger
 
-class BucketTokenRateLimiter(val capacity: Int, val interval: Long) : RateLimiter {
+class HostsLimiter(private val capacity: Int, private val interval: Long) {
 
     private val level: AtomicInteger = AtomicInteger(capacity)
     private var refillJob: Job
@@ -14,11 +14,11 @@ class BucketTokenRateLimiter(val capacity: Int, val interval: Long) : RateLimite
         }
     }
 
-    override fun consume(): Boolean {
+    fun consume(): Boolean {
         return level.getAndDecrement() > 0
     }
 
-    suspend fun refill() {
+    private suspend fun refill() {
         while(true) {
             delay(interval)
             level.set(capacity)

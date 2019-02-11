@@ -1,5 +1,5 @@
 package rate.limiter
 
 interface RateLimiter {
-    fun consume(): Boolean
+    fun consume(host: String): Boolean
 }
