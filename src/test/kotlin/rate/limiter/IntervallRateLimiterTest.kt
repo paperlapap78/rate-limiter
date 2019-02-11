@@ -32,7 +32,6 @@ class IntervallRateLimiterTest: StringSpec(), TestListener {
                 }
             }
 
-            delay(20)
             intervallLimiter?.consume(hostA)?.shouldBeFalse()
             intervallLimiter?.consume(hostB)?.shouldBeFalse()
 

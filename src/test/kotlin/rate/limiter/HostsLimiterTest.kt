@@ -43,7 +43,6 @@ class HostsLimiterTest : StringSpec(), TestListener {
                 }
             }
 
-            delay(50)
             hostLimiter?.consume()?.shouldBeFalse()
         }
     }

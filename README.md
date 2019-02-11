@@ -9,12 +9,12 @@ You'll need Java 8 or up
 ### Build
 
 ```bash
-gradle build
+./gradlew build
 ```
 
 ### Test
 
 ```bash
-gradle test
+./gradlew test
 ```
 

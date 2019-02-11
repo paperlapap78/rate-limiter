@@ -3,11 +3,16 @@ package rate.limiter
 
 import io.javalin.Javalin
 
-fun main(args: Array<String>) {
-    val rateLimiter: RateLimiter = IntervallRateLimiter(10, 100)
+fun main() {
+
+    val capacity = 10
+    val interval = 100L
+
+
+    val rateLimiter: RateLimiter = IntervallRateLimiter(capacity, interval)
 
     val app = Javalin.create().apply {
-        exception(Exception::class.java) { e, ctx -> e.printStackTrace() }
+        exception(Exception::class.java) { e, _ -> e.printStackTrace() }
         error(404) { ctx -> ctx.json("not found") }
     }.start(7000)
     app.get("/") { ctx ->
@@ -20,7 +25,7 @@ fun main(args: Array<String>) {
             rateLimiter.consume(host) -> ctx.result("Hello World")
             else -> {
                 ctx.status(429)
-                ctx.result("Rate limit exceeded")
+                ctx.result("Rate limit exceeded. Try again in ${interval} seconds")
             }
         }
     }
